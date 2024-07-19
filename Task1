@@ -1,0 +1,54 @@
+import java.util.Scanner;
+import java.util.Random;
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        Random rand = new Random();
+        int round = 1;
+        boolean playAgain = true;
+        int totalScore = 0;
+
+        while(playAgain) {
+            int x = rand.nextInt(100) + 1;
+            System.out.println(x);
+            int attemptsLeft = 10;
+            boolean guessedCorrectly = false;
+
+            System.out.println("Round:" +round);
+            System.out.println("Guess the number between 1 and 100, you have 10 guess attempts.");
+            int count = 0;
+            while (attemptsLeft > 0 && !guessedCorrectly) {
+                int guess = input.nextInt();
+
+                if (guess < 1 || guess > 100) {
+                    System.out.println("Please enter a number between 1 and 100.");
+                    continue;
+                } else if (guess == x) {
+                    System.out.println("Your guess is right");
+                    System.out.println("You had " + attemptsLeft + " attempts left.");
+                    guessedCorrectly = true;
+                    totalScore += attemptsLeft;
+                } else if (guess < x) {
+                    System.out.println("Your guess is too low");
+                    attemptsLeft--;
+                } else {
+                    System.out.println("Your guess is too high");
+                    attemptsLeft--;
+                }
+                if (attemptsLeft == 0) {
+                    System.out.println("You've run out of attempts. The correct number was " + x + ".");
+                }
+            }
+
+
+            System.out.print("Do you want to play another round? (yes/no): ");
+            String response = input.next().toLowerCase();
+            if (!response.equals("yes")) {
+                playAgain = false;
+            }
+            round++;
+            System.out.println("Your score is " + totalScore);
+        }
+
+    }
+}
